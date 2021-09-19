@@ -1,0 +1,139 @@
+/** 
+ * GuessingGame
+ * @author Han Kang
+ * @id 1712993
+ * @author Konstantin Stoyanov
+ * @id 1677543
+ * @date 21 Sep 2021
+ */
+import java.util.*; 
+
+class GuessingGameBasic{
+
+    Scanner scan = new Scanner(System.in);
+    Random randomGenerator;
+
+    public void run(){
+        System.out.println("Do you want to enter the secret code yourself?"); //Question 1
+    
+        //Variables
+        String answer; //Yes or No answer.
+        int value; //Answer for yes.
+        long seed; //Answer for no, for random input.
+        int guessedNumber; //Number guessed.
+        int guess = 0; //Number of guesses.
+        int maxGuess = 7; //Maximum number of guesses allowed.
+
+        //Answer to Q1
+        answer = scan.next();
+        if (answer.equals("yes")) {
+            System.out.println("Secretly type the code");
+            value = scan.nextInt();
+            System.out.println("Start guessing!");
+            while(true) {
+                guessedNumber = scan.nextInt();
+                guess++;
+                if (guess < maxGuess) {
+                    if (guessedNumber > value) {
+                        System.out.println("lower");
+                    } else if (guessedNumber < value) {
+                        System.out.println("higher");
+                    } else if (guessedNumber == value) {
+                        System.out.println("Good guess! You won.");
+                    break;
+                    }
+                } else if (guess == maxGuess) {
+                    if (guessedNumber > value) {
+                        System.out.println("lower");
+                    } else if (guessedNumber < value) {
+                        System.out.println("higher");
+                    }
+                System.out.println("No more guesses, you lost");
+                break;
+            }
+      
+        }
+            System.out.printf("%d guesses\n", guess);
+            int i, j;
+            String[][] output = new String[guess][100];
+            for(i = 0; i < guess; i++) {
+                for(j = 0; j < 100; j++) {
+                    if (j + 1 == guessedNumber) {
+                        output[i][j] = "X";
+                    } else if (j + 1 == value) {
+                        output[i][j] = "|";
+                    } else {
+                        output[i][j] = ".";
+                    }
+
+                }
+            }
+            for(i = 0; i < guess; i++) {
+                for(j = 0; j < 100; j++) {
+                    System.out.print(output[i][j]);
+                }
+                System.out.println("");
+            }
+            
+    //If answer to Q1 is "No".
+        } else if (answer.equals("no")) {
+            System.out.println("Type an arbitrary number");
+            seed = scan.nextLong(); //Input for seed
+            Random randomGenerator = new Random(seed);
+            int generatedNumber = randomGenerator.nextInt(100); //Generating random number between 0 to 99.
+            System.out.println("Start guessing!");
+            while(true) {
+            guessedNumber = scan.nextInt();
+            guess++;
+                if (guess < maxGuess) {
+                    if (guessedNumber > generatedNumber) {
+                        System.out.println("lower");
+                    } else if (guessedNumber < generatedNumber) {
+                        System.out.println("higher");
+                    } else if (guessedNumber == generatedNumber) {
+                        System.out.println("Good guess! You won.");
+                    break;
+                    }
+                } else if (guess == maxGuess) {
+                    if (guessedNumber > generatedNumber) {
+                        System.out.println("lower");
+                    } else if (guessedNumber < generatedNumber) {
+                        System.out.println("higher");
+                    }
+                    System.out.println("No more guesses, you lost");
+                    break;
+                }
+            }
+                    System.out.printf("%d guesses\n", guess);
+                    int i, j;
+                    String[][] output = new String[guess][100];
+                    for(i = 0; i < guess; i++) {
+                        for(j = 0; j < 100; j++) {
+                            if (j + 1 == guessedNumber) {
+                            output[i][j] = "X";
+                            } else if (j + 1 == generatedNumber) {
+                                output[i][j] = "|";
+                            } else {
+                                output[i][j] = ".";
+                            }
+
+                         }
+                    }
+                    for(i = 0; i < guess; i++) {
+                        for(j = 0; j < 100; j++) {
+                            System.out.print(output[i][j]);
+                        }
+                        System.out.println("");
+                    }
+        }
+    
+
+    }
+    
+    
+    
+    
+    public static void main(String[] args){
+        (new GuessingGameBasic()).run();
+    }
+}
